@@ -156,7 +156,7 @@ def random_zoom(x, zoom_range, row_axis=1, col_axis=2, channel_axis=0,
     return x
 
 
-def apply_channel_shift(x, intensity, channel_axis=0):
+def apply_channel_shift(x, intensity, channel=None, channel_axis=0):
     """Performs a channel shift.
 
     # Arguments
@@ -170,17 +170,22 @@ def apply_channel_shift(x, intensity, channel_axis=0):
     """
     x = np.rollaxis(x, channel_axis, 0)
     min_x, max_x = np.min(x), np.max(x)
-    channel_images = [
-        np.clip(x_channel + intensity,
+    if channel is None:
+        channel_images = [
+            np.clip(x_channel + intensity,
+                    min_x,
+                    max_x)
+            for x_channel in x]
+    else:
+        x[channel] = np.clip(x[channel] + intensity,
                 min_x,
                 max_x)
-        for x_channel in x]
     x = np.stack(channel_images, axis=0)
     x = np.rollaxis(x, 0, channel_axis + 1)
     return x
 
 
-def random_channel_shift(x, intensity_range, channel_axis=0):
+def random_channel_shift(x, intensity_range, channel=None, channel_axis=0):
     """Performs a random channel shift.
 
     # Arguments
@@ -191,7 +196,12 @@ def random_channel_shift(x, intensity_range, channel_axis=0):
     # Returns
         Numpy image tensor.
     """
-    intensity = np.random.uniform(-intensity_range, intensity_range)
+    if channel_axis is None:
+        #if no axis is specified transform every channel
+        for channel in range(x.shape[channel_axis]):
+            intensity = np.random.uniform(-intensity_range, intensity_range, channel=channel, channel_axis=channel_axis)
+    else:
+        intensity = np.random.uniform(-intensity_range, intensity_range, channel=channel, channel_axis=channel_axis)
     return apply_channel_shift(x, intensity, channel_axis=channel_axis)
 
 
