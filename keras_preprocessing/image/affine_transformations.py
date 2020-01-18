@@ -163,6 +163,7 @@ def apply_channel_shift(x, intensity, channel_axis=0, channel=None):
         x: Input tensor. Must be 3D.
         intensity: Transformation intensity.
         channel_axis: Index of axis for channels in the input tensor.
+        channel: specify if only applied on a single channel, None=all
 
     # Returns
         Numpy image tensor.
@@ -192,6 +193,7 @@ def random_channel_shift(x, intensity_range, channel_axis=0, channel=None):
         x: Input tensor. Must be 3D.
         intensity_range: Transformation intensity.
         channel_axis: Index of axis for channels in the input tensor.
+        channel: specify if only applied on a single channel, None=all
 
     # Returns
         Numpy image tensor.
