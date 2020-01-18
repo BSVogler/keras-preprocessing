@@ -22,7 +22,7 @@ from .directory_iterator import DirectoryIterator
 from .numpy_array_iterator import NumpyArrayIterator
 from .affine_transformations import (apply_affine_transform,
                                      apply_brightness_shift,
-                                     apply_channel_shift,
+                                     random_channel_shift,
                                      flip_axis)
 
 
@@ -873,7 +873,7 @@ class ImageDataGenerator(object):
                                    order=self.interpolation_order)
 
         if transform_parameters.get('channel_shift_intensity') is not None:
-            x = apply_channel_shift(x,
+            x = random_channel_shift(x,
                                     transform_parameters['channel_shift_intensity'],
                                     img_channel_axis)
 
