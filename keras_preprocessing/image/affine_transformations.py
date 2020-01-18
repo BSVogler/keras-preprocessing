@@ -156,7 +156,7 @@ def random_zoom(x, zoom_range, row_axis=1, col_axis=2, channel_axis=0,
     return x
 
 
-def apply_channel_shift(x, intensity, channel=None, channel_axis=0):
+def apply_channel_shift(x, intensity, channel_axis=0, channel=None):
     """Performs a channel shift.
 
     # Arguments
@@ -185,7 +185,7 @@ def apply_channel_shift(x, intensity, channel=None, channel_axis=0):
     return x
 
 
-def random_channel_shift(x, intensity_range, channel=None, channel_axis=0):
+def random_channel_shift(x, intensity_range, channel_axis=0, channel=None):
     """Performs a random channel shift.
 
     # Arguments
